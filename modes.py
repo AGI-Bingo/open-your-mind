@@ -54,16 +54,16 @@ def push_sha(sha: str, note: str):
 
 
 def window_start() -> date:
-    """Left column of the CURRENT 53-week window (a Sunday)."""
-    from gridmap import Grid
-    return Grid(date.today()).left_sunday
+    """Left column (Sunday) of the CURRENT calendar-YEAR tab — what year links show."""
+    from yearlayout import year_start_sunday
+    return year_start_sunday(state().get("window_year", date.today().year))
 
 
 def ghost_grid(text: str) -> list[list[int]]:
-    """5-tall text (+ :heart: icons) centered in the 7 rows, clipped to 53 cols."""
+    """5-tall text (+ :heart: icons), left-padded 1 col to stay inside the year tab."""
     strip = [[] for _ in range(ROWS)]
-    x = 0
-    for token in text.replace(":heart:", " \x00 ").split():
+    x = 1  # LEFT_PAD — column 0's top is prev-December, hidden in the year tab
+    for token in text.replace(":heart:", " \x00 ").replace("♥", " \x00 ").split():
         if token == "\x00":
             x = stamp_icon(strip, x, "heart") + 2
         else:
