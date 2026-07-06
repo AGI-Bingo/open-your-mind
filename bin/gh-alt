@@ -1,0 +1,9 @@
+#!/bin/sh
+# gh-alt — a "once-per-use" isolated gh identity.
+# Same gh binary, but pointed at its OWN config dir, so it can be logged in to a
+# different GitHub account while your main `gh` login stays completely untouched.
+# Env tokens are stripped so the main identity can't leak through.
+#   login : gh-alt auth login --hostname github.com --web --git-protocol https
+#   who   : gh-alt auth status
+#   nuke  : rm -rf "${GH_ALT_CONFIG:-$HOME/.config/gh-alt}"   (identity gone)
+exec env GH_CONFIG_DIR="${GH_ALT_CONFIG:-$HOME/.config/gh-alt}" GH_TOKEN= GITHUB_TOKEN= gh "$@"

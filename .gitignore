@@ -1,3 +1,8 @@
 __pycache__/
 *.pyc
 .DS_Store
+conversation/
+.save_and_ship/
+CONTINUE.md
+HN_POST.md
+skills/
